@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regulations · OneTrust Compliance</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .page-header-left { flex: 1; }
+    .page-header-left .eyebrow {
+      color: var(--ot-jade);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .page-header-left h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.2;
+    }
+    .page-header-left p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--ot-muted);
+    }
+    .page-header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+      padding-top: 6px;
+    }
+    .outlined-button {
+      border: 1.5px solid var(--ot-black);
+      border-radius: var(--radius-pill);
+      background: var(--ot-white);
+      color: var(--ot-black);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px 18px;
+    }
+
+    /* ── Filter bar ── */
+    .reg-filter-bar {
+      border-top: 1px solid var(--ot-rule);
+      border-bottom: 1px solid var(--ot-rule);
+      padding: 10px 0;
+      margin-bottom: 22px;
+    }
+
+    /* ── Regulation cards grid ── */
+    .reg-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .reg-card {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 18px 20px 14px;
+      box-shadow: 0 1px 0 var(--ot-rule);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .reg-card-top {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .reg-acronym {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1;
+    }
+    .reg-jurisdiction {
+      font-size: 14px;
+      color: var(--ot-muted);
+    }
+    .reg-status-active {
+      border-radius: var(--radius-pill);
+      background: var(--ot-mint);
+      color: var(--ot-black);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+    }
+    .reg-status-watching {
+      border-radius: var(--radius-pill);
+      background: var(--ot-yellow);
+      color: var(--ot-black);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+    }
+    .reg-fullname {
+      font-size: 12px;
+      color: var(--ot-muted);
+      line-height: 1.4;
+    }
+    .reg-article-count {
+      font-size: 11px;
+      color: var(--ot-muted);
+      font-weight: 700;
+    }
+
+    /* Coverage row */
+    .coverage-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 36px;
+      gap: 8px;
+      align-items: center;
+    }
+    .coverage-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--ot-muted);
+    }
+    .coverage-pct {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ot-black);
+      text-align: right;
+    }
+
+    /* Rationale block */
+    .rationale-block {
+      background: #F0FDF8;
+      border-left: 3px solid var(--ot-mint);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+    }
+    .rationale-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--ot-jade);
+      margin-bottom: 5px;
+    }
+    .rationale-block ul {
+      margin: 0;
+      padding-left: 14px;
+    }
+    .rationale-block li {
+      font-size: 11px;
+      color: var(--ot-body);
+      line-height: 1.5;
+      margin-bottom: 2px;
+    }
+    .rationale-block li:last-child { margin-bottom: 0; }
+
+    /* Inline stats */
+    .reg-stats {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--ot-rule);
+      padding-top: 10px;
+    }
+    .reg-stat {
+      flex: 1;
+      border-right: 1px solid var(--ot-rule);
+      padding-right: 12px;
+      margin-right: 12px;
+    }
+    .reg-stat:last-child {
+      border-right: none;
+      padding-right: 0;
+      margin-right: 0;
+    }
+    .reg-stat-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ot-muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .reg-stat-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ot-black);
+    }
+    .reg-stat-value.issue-warm { color: var(--risk-high); }
+    .reg-stat-value.issue-hot  { color: var(--risk-critical); }
+
+    /* Card footer */
+    .reg-card-footer {
+      border-top: 1px solid var(--ot-rule);
+      padding-top: 10px;
+      text-align: right;
+    }
+    .reg-card-footer a {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ot-jade);
+      text-decoration: none;
+    }
+    .reg-card-footer a:hover { text-decoration: underline; }
+
+    /* ── Not-applicable section ── */
+    .not-applicable {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: #FAFAFA;
+      padding: 0;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .not-applicable-header {
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ot-muted);
+      cursor: default;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .not-applicable-header .caret { font-size: 10px; }
+    .not-applicable-rows {
+      border-top: 1px solid var(--ot-rule);
+    }
+    .not-applicable-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--ot-rule);
+      font-size: 12px;
+    }
+    .not-applicable-row:last-child { border-bottom: none; }
+    .na-acronym {
+      font-weight: 700;
+      color: var(--ot-black);
+      min-width: 56px;
+    }
+    .na-reason {
+      color: var(--ot-muted);
+      font-size: 11px;
+    }
+    .na-badge {
+      border-radius: var(--radius-pill);
+      background: var(--ot-track);
+      color: var(--ot-muted);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ── AI suggestions strip ── */
+    .ai-suggestions {
+      margin-top: 28px;
+      border-radius: 16px;
+      background: var(--ot-black);
+      padding: 26px 28px 28px;
+    }
+    .ai-suggestions .section-heading { margin-bottom: 18px; }
+    .ai-suggestions .section-heading .eyebrow { color: #A0A0A0; }
+    .ai-suggestions .section-heading h2 {
+      margin: 4px 0 0;
+      color: var(--ot-mint);
+      font-size: 18px;
+    }
+    .suggestion-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .suggestion-card {
+      border: 1px solid #333333;
+      border-radius: var(--radius-card);
+      background: #101010;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .suggestion-card .eyebrow { color: var(--ot-mint); display: block; }
+    .suggestion-card strong {
+      color: var(--ot-white);
+      font-size: 14px;
+      line-height: 1.3;
+      display: block;
+    }
+    .suggestion-card p {
+      margin: 0;
+      color: #A0A0A0;
+      font-size: 11px;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    @media (max-width: 1100px) {
+      .reg-grid { grid-template-columns: 1fr; }
+      .suggestion-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <a class="brand" href="index.html" aria-label="OneTrust">
+      <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    </a>
+    <nav class="nav-tabs" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="company.html">Company</a>
+      <a href="regulations.html" class="active">Regulations</a>
+      <a href="projects.html">Projects</a>
+      <a href="intelligence.html">Intelligence</a>
+    </nav>
+    <div class="top-actions">
+      <details class="quick-actions">
+        <summary>+ Quick actions</summary>
+        <div class="quick-actions-menu">
+          <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
+          <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
+          <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
+          <a href="#"><span class="qa-glyph">✓</span><span class="qa-text"><span class="qa-label">Review pending exceptions</span><span class="qa-desc">4 awaiting your decision</span></span></a>
+        </div>
+      </details>
+      <div class="sync-badge" aria-live="polite">
+        <span class="sync-dot"></span>
+        <span>Synced 14:02 ET</span>
+      </div>
+      <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+      <button class="icon-button" type="button" aria-label="Notifications" title="Notifications">
+        <span class="notif-dot"></span>
+        &#x1F514;
+      </button>
+      <button class="user-chip" type="button" aria-label="Account menu">
+        <span class="avatar">KJ</span>
+        <span>K. Jones</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- 1. Page header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="eyebrow">Regulations in Scope</span>
+        <h1>8 regulations apply to AuraJets Inc.</h1>
+        <p>Automatically mapped from your company profile. Last refreshed 2 hours ago.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="ai-insights-toggle" type="button" aria-expanded="false" aria-controls="ai-panel-regs">
+          <span class="ai-border-glow" aria-hidden="true"></span>
+          <svg class="ai-orb" viewBox="0 0 14 14" aria-hidden="true"><defs><linearGradient id="aiGrad" x1="0" y1="0" x2="14" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#008665"/><stop offset="50%" stop-color="#6CEEAD"/><stop offset="100%" stop-color="#976FE6"/></linearGradient></defs><path d="M7 0.5 L8.3 5.7 L13.5 7 L8.3 8.3 L7 13.5 L5.7 8.3 L0.5 7 L5.7 5.7 Z" fill="url(#aiGrad)"/></svg>
+          <span>AI Insights</span>
+          <span class="ai-toggle-count">3 new</span>
+          <svg class="ai-toggle-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="outlined-button" type="button">Re-run scoping</button>
+        <button class="primary-button" type="button">Add custom regulation</button>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel -->
+    <div class="ai-insights-panel" id="ai-panel-regs" data-state="closed">
+        <div class="ai-insights-strip">
+          <article class="ai-insight-card tone-emerging">
+            <span class="ai-tag">✦ Emerging</span>
+            <strong>EU AI Act enforcement T-90 days</strong>
+            <p>Your AI Support Summarizer is high-risk under Annex III — readiness 24%.</p>
+            <a href="#" class="ai-link">View readiness →</a>
+          </article>
+          <article class="ai-insight-card tone-attention">
+            <span class="ai-tag">⚠ Threshold approaching</span>
+            <strong>Colorado CPA in ~3 weeks</strong>
+            <p>4,800 of 5,000 CO resident records — adds to scope when the threshold is crossed.</p>
+            <a href="#" class="ai-link">Prepare scope →</a>
+          </article>
+          <article class="ai-insight-card tone-info">
+            <span class="ai-tag">✦ New amendment</span>
+            <strong>VCDPA 2026 amendment</strong>
+            <p>Sensitive data definition expands Jan 2027 — affects 4 of your business processes.</p>
+            <a href="#" class="ai-link">Read summary →</a>
+          </article>
+        </div>
+        <p class="ai-insights-meta">Refreshed 2 hours ago</p>
+    </div>
+
+    <!-- 2. Filter chip row -->
+    <div class="reg-filter-bar">
+      <div class="chips">
+        <button class="chip active" type="button">All regulations · 8</button>
+        <button class="chip" type="button">Privacy · 4</button>
+        <button class="chip" type="button">Financial · 2</button>
+        <button class="chip" type="button">Industry · 1</button>
+        <button class="chip" type="button">Security · 1</button>
+        <button class="chip" type="button">Active · 8</button>
+        <button class="chip" type="button">Watching · 2</button>
+      </div>
+    </div>
+
+    <!-- 3. Regulation cards grid -->
+    <div class="reg-grid">
+
+      <!-- Card 1: GDPR -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">GDPR</span>
+            <span class="reg-jurisdiction">🇪🇺 EU</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">General Data Protection Regulation</div>
+          <div class="reg-article-count" style="margin-top:2px;">567 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:92%;--fill:var(--ot-jade);"></span></div>
+          <span class="coverage-pct">92%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>You process EU resident personal data</li>
+            <li>Subject to Article 27 EU representative requirement</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">142</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value">7</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">5d ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 2: CCPA -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">CCPA</span>
+            <span class="reg-jurisdiction">🇺🇸 California</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">California Consumer Privacy Act</div>
+          <div class="reg-article-count" style="margin-top:2px;">234 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:78%;--fill:var(--ot-sky);"></span></div>
+          <span class="coverage-pct">78%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Annual revenue &gt;$25M — triggers CCPA applicability</li>
+            <li>50M+ California consumer records processed annually</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">88</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value issue-warm">14</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">12d ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 3: CPRA -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">CPRA</span>
+            <span class="reg-jurisdiction">🇺🇸 California</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">California Privacy Rights Act</div>
+          <div class="reg-article-count" style="margin-top:2px;">156 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:89%;--fill:var(--ot-sky);"></span></div>
+          <span class="coverage-pct">89%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Buys, sells, or shares personal information for cross-context advertising</li>
+            <li>Effective Jan 2023 — supersedes and extends CCPA obligations</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">71</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value">4</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">5d ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 4: VCDPA -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">VCDPA</span>
+            <span class="reg-jurisdiction">🇺🇸 Virginia</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">Virginia Consumer Data Protection Act</div>
+          <div class="reg-article-count" style="margin-top:2px;">98 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:71%;--fill:var(--ot-sky);"></span></div>
+          <span class="coverage-pct">71%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Processes 100K+ Virginia resident records per calendar year</li>
+            <li>B2C operations in Virginia — consumer-facing services in scope</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">42</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value issue-warm">11</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">3w ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 5: UK GDPR + DPA 2018 -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">UK GDPR + DPA 2018</span>
+            <span class="reg-jurisdiction">🇬🇧 UK</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">UK General Data Protection Regulation &amp; Data Protection Act 2018</div>
+          <div class="reg-article-count" style="margin-top:2px;">451 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:88%;--fill:var(--ot-sky);"></span></div>
+          <span class="coverage-pct">88%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Office in London (UK-1) — UK establishment triggers DPA 2018</li>
+            <li>Process UK resident data for travel booking and loyalty services</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">118</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value">5</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">1w ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 6: PCI DSS v4.0 -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">PCI DSS v4.0</span>
+            <span class="reg-jurisdiction">🌐 Global</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">Payment Card Industry Data Security Standard v4.0</div>
+          <div class="reg-article-count" style="margin-top:2px;">312 controls</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:95%;--fill:var(--ot-jade);"></span></div>
+          <span class="coverage-pct">95%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Processes payment card data via Stripe integration</li>
+            <li>Classified as a Level 2 merchant — annual SAQ required</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">312</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value">2</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">2w ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 7: SOC 2 Type II -->
+      <div class="reg-card">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">SOC 2 Type II</span>
+            <span class="reg-jurisdiction">🌐 Global</span>
+            <span class="reg-status-active">Active</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">Service Organization Control 2 — Type II Audit</div>
+          <div class="reg-article-count" style="margin-top:2px;">64 controls</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:91%;--fill:var(--ot-jade);"></span></div>
+          <span class="coverage-pct">91%</span>
+        </div>
+
+        <div class="rationale-block">
+          <div class="rationale-label">Why this applies</div>
+          <ul>
+            <li>Annual SOC 2 Type II audit required by enterprise customer contracts</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">64</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value">3</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">1m ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+      <!-- Card 8: EU AI Act -->
+      <div class="reg-card" style="border-color:#FFEF3C80;">
+        <div>
+          <div class="reg-card-top">
+            <span class="reg-acronym">EU AI Act</span>
+            <span class="reg-jurisdiction">🇪🇺 EU</span>
+            <span class="reg-status-watching">Watching</span>
+          </div>
+          <div class="reg-fullname" style="margin-top:4px;">European Union Artificial Intelligence Act</div>
+          <div class="reg-article-count" style="margin-top:2px;">87 articles</div>
+        </div>
+
+        <div class="coverage-row">
+          <span class="coverage-label">Coverage</span>
+          <div class="bar"><span style="--value:24%;--fill:var(--risk-critical);"></span></div>
+          <span class="coverage-pct" style="color:var(--risk-critical);">24%</span>
+        </div>
+
+        <div class="rationale-block" style="background:#FFFBEB;border-left-color:var(--ot-yellow);">
+          <div class="rationale-label" style="color:#92650A;">Why this applies</div>
+          <ul>
+            <li>Enforcement begins Aug 2026 — proactive readiness required now</li>
+            <li>You deploy AI in customer support summarizer — classified as high-risk system</li>
+          </ul>
+        </div>
+
+        <div class="reg-stats">
+          <div class="reg-stat">
+            <span class="reg-stat-label">Mapped controls</span>
+            <span class="reg-stat-value">31</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Open issues</span>
+            <span class="reg-stat-value issue-hot">18</span>
+          </div>
+          <div class="reg-stat">
+            <span class="reg-stat-label">Last review</span>
+            <span class="reg-stat-value">1d ago</span>
+          </div>
+        </div>
+        <div class="reg-card-footer">
+          <a href="#">Review controls →</a>
+        </div>
+      </div>
+
+    </div><!-- /reg-grid -->
+
+    <!-- 4. Not applicable section -->
+    <div class="not-applicable">
+      <div class="not-applicable-header">
+        <span class="caret">▸</span>
+        <span>3 regulations checked and ruled out (HIPAA, GLBA, FERPA)</span>
+      </div>
+      <div class="not-applicable-rows">
+        <div class="not-applicable-row">
+          <span class="na-acronym">HIPAA</span>
+          <span class="na-reason">Not a covered entity or business associate · No protected health information processed</span>
+          <span class="na-badge">Ruled out</span>
+        </div>
+        <div class="not-applicable-row">
+          <span class="na-acronym">GLBA</span>
+          <span class="na-reason">Not a financial institution · Does not offer financial products or services</span>
+          <span class="na-badge">Ruled out</span>
+        </div>
+        <div class="not-applicable-row">
+          <span class="na-acronym">FERPA</span>
+          <span class="na-reason">Not an educational institution · No student education records maintained</span>
+          <span class="na-badge">Ruled out</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    <span>© 2026 OneTrust</span>
+  </footer>
+
+  <script src="ai-insights.js"></script>
+</body>
+</html>

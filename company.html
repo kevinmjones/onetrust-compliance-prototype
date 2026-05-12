@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company · OneTrust Compliance</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    .page-header-copy { flex: 1; }
+    .page-header-copy h1 {
+      margin: 4px 0 5px;
+      font-size: 24px;
+      color: var(--ot-black);
+      line-height: 1.2;
+    }
+    .page-header-copy .hero-copy { margin: 0; }
+    .page-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      padding-top: 18px;
+    }
+    .outline-button {
+      border: 1.5px solid var(--ot-black);
+      border-radius: var(--radius-pill);
+      background: var(--ot-white);
+      color: var(--ot-black);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px 18px;
+    }
+
+    /* ── Completeness banner ── */
+    .completeness-banner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+      background: #F0FDF9;
+      border: 1px solid #B2EEDD;
+      border-radius: var(--radius-card);
+      padding: 18px 24px;
+      margin-bottom: 20px;
+    }
+    .completeness-left .pct {
+      display: block;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--ot-jade);
+      line-height: 1;
+      margin: 4px 0 2px;
+    }
+    .completeness-left .sub-label {
+      font-size: 11px;
+      color: var(--ot-muted);
+    }
+    .completeness-center { min-width: 0; }
+    .completeness-center .bar {
+      height: 10px;
+      margin-top: 6px;
+    }
+    .completeness-center .bar-label {
+      font-size: 11px;
+      color: var(--ot-muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .completeness-right {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      align-items: flex-end;
+    }
+    .missing-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
+    }
+    .missing-chip {
+      border: 1px solid #F39C12;
+      border-radius: var(--radius-pill);
+      background: #FFFBF0;
+      color: #9A6200;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 9px;
+    }
+    .resume-link {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ot-jade);
+      text-decoration: none;
+    }
+    .resume-link:hover { text-decoration: underline; }
+
+    /* ── Fact strip ── */
+    .fact-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .fact-card {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 14px 16px;
+      box-shadow: 0 1px 0 var(--ot-rule);
+    }
+    .fact-card .fact-number {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1;
+      margin: 6px 0 4px;
+    }
+    .fact-card .fact-sub {
+      font-size: 11px;
+      color: var(--ot-muted);
+    }
+
+    /* ── Two-column body ── */
+    .profile-body {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* ── Accordion sections ── */
+    .profile-sections-panel {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--ot-rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-header h2 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--ot-black);
+    }
+    .panel-header .panel-header-meta {
+      font-size: 11px;
+      color: var(--ot-muted);
+    }
+
+    .profile-accordion { border-bottom: 1px solid #EEEEEE; }
+    .profile-accordion:last-child { border-bottom: none; }
+
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+    .accordion-summary::-webkit-details-marker { display: none; }
+    .accordion-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ot-black);
+    }
+    .accordion-field-count {
+      font-size: 11px;
+      color: var(--ot-muted);
+      white-space: nowrap;
+    }
+    .status-complete {
+      border-radius: var(--radius-pill);
+      background: var(--ot-mint);
+      color: var(--ot-black);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 9px;
+    }
+    .status-incomplete {
+      border-radius: var(--radius-pill);
+      background: #FFF3CD;
+      color: #7A5300;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 9px;
+    }
+    .accordion-chevron {
+      color: var(--ot-muted);
+      font-size: 14px;
+      transition: transform 200ms ease;
+    }
+    details[open] .accordion-chevron { transform: rotate(90deg); }
+
+    /* expanded field rows */
+    .accordion-body {
+      padding: 0 18px 14px 18px;
+      border-top: 1px solid #F0F0F0;
+      background: #FAFAFA;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #EEEEEE;
+      font-size: 12px;
+    }
+    .field-row:last-child { border-bottom: none; }
+    .field-name { color: var(--ot-muted); }
+    .field-value { color: var(--ot-black); font-weight: 700; }
+    .field-value.empty { color: #C0C0C0; font-weight: 400; }
+    .edit-link {
+      font-size: 10px;
+      color: var(--ot-sky);
+      text-decoration: none;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .edit-link:hover { text-decoration: underline; }
+
+    /* ── Document intake panel ── */
+    .document-panel {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      overflow: hidden;
+      position: sticky;
+      top: 72px;
+    }
+    .doc-panel-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--ot-rule);
+    }
+    .doc-panel-header h2 {
+      margin: 3px 0 0;
+      font-size: 15px;
+      color: var(--ot-black);
+    }
+    .doc-panel-body { padding: 16px 18px; }
+
+    .upload-zone {
+      border: 2px dashed #C8E6C9;
+      border-radius: 10px;
+      background: #F7FDF9;
+      padding: 22px 16px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .upload-icon {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .upload-zone p {
+      margin: 0 0 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ot-jade);
+    }
+    .upload-zone small {
+      font-size: 10px;
+      color: var(--ot-muted);
+    }
+
+    .doc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .doc-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px;
+      border: 1px solid var(--ot-rule);
+      border-radius: 9px;
+      background: var(--ot-white);
+    }
+    .doc-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .doc-meta { flex: 1; min-width: 0; }
+    .doc-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ot-black);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .doc-byline {
+      font-size: 10px;
+      color: var(--ot-muted);
+      margin-top: 1px;
+    }
+    .doc-badge {
+      flex-shrink: 0;
+      border-radius: var(--radius-pill);
+      background: #EBF7FF;
+      color: var(--ot-sky);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 7px;
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    /* ── AI prompt strip ── */
+    .ai-prompt-strip {
+      margin-top: 28px;
+      border-radius: 16px;
+      background: var(--ot-black);
+      padding: 26px 28px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .ai-prompt-copy { flex: 1; min-width: 180px; }
+    .ai-prompt-copy .eyebrow { color: var(--ot-mint); display: block; margin-bottom: 4px; }
+    .ai-prompt-copy h2 {
+      margin: 0;
+      color: var(--ot-white);
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .ai-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    @media (max-width: 1100px) {
+      .profile-body { grid-template-columns: 1fr; }
+      .document-panel { position: static; }
+      .completeness-banner { grid-template-columns: auto 1fr; }
+      .completeness-right { display: none; }
+      .fact-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .fact-strip { grid-template-columns: 1fr 1fr; }
+      .page-header { flex-direction: column; gap: 12px; }
+      .completeness-banner { grid-template-columns: 1fr; gap: 14px; }
+      .ai-prompt-strip { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <a class="brand" href="index.html" aria-label="OneTrust">
+      <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    </a>
+    <nav class="nav-tabs" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="company.html" class="active">Company</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="projects.html">Projects</a>
+      <a href="intelligence.html">Intelligence</a>
+    </nav>
+    <div class="top-actions">
+      <details class="quick-actions">
+        <summary>+ Quick actions</summary>
+        <div class="quick-actions-menu">
+          <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
+          <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
+          <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
+          <a href="#"><span class="qa-glyph">✓</span><span class="qa-text"><span class="qa-label">Review pending exceptions</span><span class="qa-desc">4 awaiting your decision</span></span></a>
+        </div>
+      </details>
+      <div class="sync-badge" aria-live="polite">
+        <span class="sync-dot"></span>
+        <span>Synced 14:02 ET</span>
+      </div>
+      <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+      <button class="icon-button" type="button" aria-label="Notifications" title="Notifications">
+        <span class="notif-dot"></span>
+        &#x1F514;
+      </button>
+      <button class="user-chip" type="button" aria-label="Account menu">
+        <span class="avatar">KJ</span>
+        <span>K. Jones</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- 1. Page header -->
+    <div class="page-header">
+      <div class="page-header-copy">
+        <p class="eyebrow mint-text">COMPANY PROFILE</p>
+        <h1>AuraJets Inc.</h1>
+        <p class="hero-copy">The foundation for every compliance decision the AI makes.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="ai-insights-toggle" type="button" aria-expanded="false" aria-controls="ai-panel-company">
+          <span class="ai-border-glow" aria-hidden="true"></span>
+          <svg class="ai-orb" viewBox="0 0 14 14" aria-hidden="true"><defs><linearGradient id="aiGrad" x1="0" y1="0" x2="14" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#008665"/><stop offset="50%" stop-color="#6CEEAD"/><stop offset="100%" stop-color="#976FE6"/></linearGradient></defs><path d="M7 0.5 L8.3 5.7 L13.5 7 L8.3 8.3 L7 13.5 L5.7 8.3 L0.5 7 L5.7 5.7 Z" fill="url(#aiGrad)"/></svg>
+          <span>AI Insights</span>
+          <span class="ai-toggle-count">3 new</span>
+          <svg class="ai-toggle-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="outline-button" type="button">Edit profile</button>
+        <button class="primary-button" type="button">Run assessment</button>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel -->
+    <div class="ai-insights-panel" id="ai-panel-company" data-state="closed">
+        <div class="ai-insights-strip">
+          <article class="ai-insight-card tone-info">
+            <span class="ai-tag">✦ New context</span>
+            <strong>EU office in Berlin extracted</strong>
+            <p>Pulled from Annual Report 2025 — added to jurisdictions, pending your review.</p>
+            <a href="#" class="ai-link">Review change →</a>
+          </article>
+          <article class="ai-insight-card tone-attention">
+            <span class="ai-tag">⚠ Blocking validation</span>
+            <strong>23 controls can't run yet</strong>
+            <p>Missing fields in Security &amp; Data Protection stall the PCI DSS scan.</p>
+            <a href="#" class="ai-link">Resume assessment →</a>
+          </article>
+          <article class="ai-insight-card tone-emerging">
+            <span class="ai-tag">✦ Suggested</span>
+            <strong>DPO appointment likely required</strong>
+            <p>Your EU data subject volume crossed the GDPR Art 37 threshold.</p>
+            <a href="#" class="ai-link">Learn why →</a>
+          </article>
+        </div>
+        <p class="ai-insights-meta">Refreshed 2 min ago</p>
+    </div>
+
+    <!-- 2. Profile completeness banner -->
+    <div class="completeness-banner" aria-label="Profile completeness">
+      <div class="completeness-left">
+        <p class="eyebrow" style="color:var(--ot-jade);">PROFILE COMPLETENESS</p>
+        <span class="pct">62%</span>
+        <span class="sub-label">32 of 51 fields captured</span>
+      </div>
+      <div class="completeness-center">
+        <span class="bar-label">19 fields remaining before the AI can generate a full gap report</span>
+        <div class="bar" style="height:10px;">
+          <span style="--value:62%; --fill:var(--ot-mint);"></span>
+        </div>
+      </div>
+      <div class="completeness-right">
+        <div class="missing-chips" aria-label="Top missing fields">
+          <span class="missing-chip">Has DPO?</span>
+          <span class="missing-chip">Retention period</span>
+          <span class="missing-chip">International transfers</span>
+        </div>
+        <a href="#profile-sections" class="resume-link">Resume assessment →</a>
+      </div>
+    </div>
+
+    <!-- 3. Top facts strip -->
+    <div class="fact-strip" aria-label="Company facts" role="list">
+      <div class="fact-card" role="listitem">
+        <p class="eyebrow">EMPLOYEES</p>
+        <span class="fact-number">2,840</span>
+        <span class="fact-sub">Across 6 offices</span>
+      </div>
+      <div class="fact-card" role="listitem">
+        <p class="eyebrow">JURISDICTIONS</p>
+        <span class="fact-number">12</span>
+        <span class="fact-sub">EU, UK, US, CA, AU + 7</span>
+      </div>
+      <div class="fact-card" role="listitem">
+        <p class="eyebrow">DATA ROLE</p>
+        <span class="fact-number" style="font-size:22px;padding-top:4px;">Controller</span>
+        <span class="fact-sub">+ Processor for B2B</span>
+      </div>
+      <div class="fact-card" role="listitem">
+        <p class="eyebrow">ACTIVE REGULATIONS</p>
+        <span class="fact-number">8</span>
+        <span class="fact-sub">Auto-mapped from profile</span>
+      </div>
+    </div>
+
+    <!-- 4. Two-column body -->
+    <div class="profile-body" id="profile-sections">
+
+      <!-- Left: Profile sections accordion -->
+      <div class="profile-sections-panel" aria-label="Profile sections">
+        <div class="panel-header">
+          <h2>Profile sections</h2>
+          <span class="panel-header-meta">5 of 8 complete</span>
+        </div>
+
+        <!-- 1. Company basics — Complete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Company basics</span>
+            <span class="accordion-field-count">5 / 5 fields</span>
+            <span class="status-complete">Complete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">Click to expand and review captured fields.</p>
+          </div>
+        </details>
+
+        <!-- 2. Geography & scale — Complete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Geography &amp; scale</span>
+            <span class="accordion-field-count">5 / 5 fields</span>
+            <span class="status-complete">Complete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">Click to expand and review captured fields.</p>
+          </div>
+        </details>
+
+        <!-- 3. Industry classification — Complete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Industry classification</span>
+            <span class="accordion-field-count">7 / 7 fields</span>
+            <span class="status-complete">Complete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">Click to expand and review captured fields.</p>
+          </div>
+        </details>
+
+        <!-- 4. Data role — Incomplete — EXPANDED -->
+        <details class="profile-accordion" open>
+          <summary class="accordion-summary">
+            <span class="accordion-name">Data role</span>
+            <span class="accordion-field-count">8 / 10 fields</span>
+            <span class="status-incomplete">Incomplete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <div class="field-row">
+              <span class="field-name">Data Controller?</span>
+              <span class="field-value">Yes</span>
+              <a href="#" class="edit-link" aria-label="Edit Data Controller field">✏ Edit</a>
+            </div>
+            <div class="field-row">
+              <span class="field-name">Data Processor?</span>
+              <span class="field-value">Yes</span>
+              <a href="#" class="edit-link" aria-label="Edit Data Processor field">✏ Edit</a>
+            </div>
+            <div class="field-row">
+              <span class="field-name">Collects Personal Data?</span>
+              <span class="field-value">Yes</span>
+              <a href="#" class="edit-link" aria-label="Edit Collects Personal Data field">✏ Edit</a>
+            </div>
+            <div class="field-row">
+              <span class="field-name">Processes Sensitive Data?</span>
+              <span class="field-value empty">— Not answered</span>
+              <a href="#" class="edit-link" aria-label="Edit Processes Sensitive Data field">✏ Edit</a>
+            </div>
+          </div>
+        </details>
+
+        <!-- 5. Consumer rights — Complete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Consumer rights</span>
+            <span class="accordion-field-count">8 / 8 fields</span>
+            <span class="status-complete">Complete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">Click to expand and review captured fields.</p>
+          </div>
+        </details>
+
+        <!-- 6. Children & COPPA — Complete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Children &amp; COPPA</span>
+            <span class="accordion-field-count" title="Not directed at children">3 / 3 fields · Not directed at children</span>
+            <span class="status-complete">Complete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">AuraJets products are not directed at children under 13. COPPA obligations waived.</p>
+          </div>
+        </details>
+
+        <!-- 7. Security & data protection — Incomplete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Security &amp; data protection</span>
+            <span class="accordion-field-count">1 / 5 fields</span>
+            <span class="status-incomplete">Incomplete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">4 fields are missing. The AI cannot assess Article 32 GDPR controls without this data.</p>
+          </div>
+        </details>
+
+        <!-- 8. Compliance operations — Incomplete -->
+        <details class="profile-accordion">
+          <summary class="accordion-summary">
+            <span class="accordion-name">Compliance operations</span>
+            <span class="accordion-field-count">5 / 8 fields</span>
+            <span class="status-incomplete">Incomplete</span>
+            <span class="accordion-chevron" aria-hidden="true">›</span>
+          </summary>
+          <div class="accordion-body">
+            <p style="font-size:11px;color:var(--ot-muted);margin:10px 0 0;">Missing: DPO appointment status, breach notification procedure, and cross-border transfer mechanism.</p>
+          </div>
+        </details>
+
+      </div><!-- /profile-sections-panel -->
+
+      <!-- Right: Document intake -->
+      <aside class="document-panel" aria-label="Document intake">
+        <div class="doc-panel-header">
+          <p class="eyebrow mint-text">AI EXTRACTION</p>
+          <h2>Documents teach the AI</h2>
+        </div>
+        <div class="doc-panel-body">
+
+          <div class="upload-zone" role="region" aria-label="Upload zone">
+            <span class="upload-icon" aria-hidden="true">📂</span>
+            <p>Drop documents here — AI auto-fills</p>
+            <small>Privacy policies, DPAs, annual reports · Max 10 MB per file</small>
+          </div>
+
+          <ul class="doc-list" aria-label="Uploaded documents">
+            <li class="doc-item">
+              <span class="doc-icon" aria-hidden="true">📄</span>
+              <div class="doc-meta">
+                <div class="doc-name" title="Privacy Policy v3.docx">Privacy Policy v3.docx</div>
+                <div class="doc-byline">Uploaded 2 days ago · DOCX</div>
+              </div>
+              <span class="doc-badge">23 fields extracted</span>
+            </li>
+            <li class="doc-item">
+              <span class="doc-icon" aria-hidden="true">📄</span>
+              <div class="doc-meta">
+                <div class="doc-name" title="Annual Report 2025.pdf">Annual Report 2025.pdf</div>
+                <div class="doc-byline">Uploaded 1 week ago · PDF</div>
+              </div>
+              <span class="doc-badge">11 fields extracted</span>
+            </li>
+            <li class="doc-item">
+              <span class="doc-icon" aria-hidden="true">📄</span>
+              <div class="doc-meta">
+                <div class="doc-name" title="DPA Template.pdf">DPA Template.pdf</div>
+                <div class="doc-byline">Uploaded 2 weeks ago · PDF</div>
+              </div>
+              <span class="doc-badge">8 fields extracted</span>
+            </li>
+          </ul>
+
+          <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--ot-rule);">
+            <div class="metric-line">
+              <span>Fields filled by AI</span>
+              <div class="bar"><span style="--value:82%;"></span></div>
+              <span>82%</span>
+            </div>
+            <p style="font-size:10px;color:var(--ot-muted);margin:8px 0 0;">3 documents · 42 fields auto-populated · Last extraction 14:02 ET</p>
+          </div>
+
+        </div>
+      </aside>
+
+    </div><!-- /profile-body -->
+
+    <!-- 5. AI assistant prompt strip -->
+    <div class="ai-prompt-strip" role="region" aria-label="AI assistant">
+      <div class="ai-prompt-copy">
+        <span class="eyebrow">AI COMPLIANCE ASSISTANT</span>
+        <h2>Ask the AI about your compliance posture</h2>
+      </div>
+      <div class="ai-prompts" role="list">
+        <button class="ack-button" type="button" role="listitem">What regulations apply to us?</button>
+        <button class="ack-button" type="button" role="listitem">What are my biggest compliance gaps?</button>
+        <button class="ack-button" type="button" role="listitem">How do I appoint a DPO?</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    <span>© 2026 OneTrust</span>
+  </footer>
+
+  <script src="ai-insights.js"></script>
+</body>
+</html>

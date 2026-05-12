@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home · OneTrust Compliance</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--ot-rule);
+      margin-bottom: 20px;
+    }
+    .page-header h1 {
+      margin: 4px 0 6px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.2;
+    }
+    .page-header .hero-copy {
+      margin: 0;
+      font-size: 13px;
+      color: var(--ot-muted);
+    }
+    .page-header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ── KPI cards as buttons ── */
+    button.kpi-card {
+      appearance: none;
+      width: 100%;
+      transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+    }
+    button.kpi-card:hover {
+      border-color: #bbb;
+      box-shadow: var(--shadow-elev);
+      transform: translateY(-1px);
+    }
+
+    /* ── Priority queue section ── */
+    .priority-queue {
+      margin-bottom: 24px;
+    }
+    .attention-list {
+      display: grid;
+      gap: 8px;
+    }
+    .attention-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 12px 14px;
+      box-shadow: 0 1px 0 var(--ot-rule);
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+    .attention-row:hover {
+      border-color: #ccc;
+      box-shadow: var(--shadow-elev);
+    }
+    .attention-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .attention-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ot-black);
+      margin: 0 0 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .attention-meta {
+      font-size: 11px;
+      color: var(--ot-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    .attention-meta .meta-seg {
+      display: inline;
+    }
+    .attention-meta .meta-seg::after {
+      content: " · ";
+      color: var(--ot-rule);
+    }
+    .attention-meta .meta-seg:last-child::after {
+      content: none;
+    }
+    .review-btn {
+      flex-shrink: 0;
+      border: 0;
+      border-radius: var(--radius-pill);
+      background: var(--ot-black);
+      color: var(--ot-mint);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 7px 14px;
+      white-space: nowrap;
+      transition: background 120ms ease;
+    }
+    .review-btn:hover {
+      background: #222;
+    }
+
+    /* ── Lower split ── */
+    .lower-split {
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      gap: 16px;
+      margin-bottom: 24px;
+      align-items: start;
+    }
+    .split-panel {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      padding: 18px 20px 20px;
+      background: var(--ot-white);
+    }
+    .split-panel .section-heading {
+      margin-bottom: 0;
+    }
+
+    /* ── Timeline actor dot overrides ── */
+    .timeline li.ai-event::before   { background: var(--ot-jade); }
+    .timeline li.auto-event::before { background: var(--ot-sky); }
+    .timeline li.human-event::before { background: var(--ot-black); }
+    .timeline .actor-ai   { color: var(--ot-jade); }
+    .timeline .actor-auto { color: var(--ot-sky); }
+    .timeline .actor-human { color: var(--ot-muted); }
+
+    /* ── Quick actions grid ── */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .qa-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 14px 14px 12px;
+      text-align: left;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+    .qa-tile:hover {
+      border-color: var(--ot-black);
+      box-shadow: var(--shadow-elev);
+    }
+    .qa-glyph {
+      font-size: 20px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .qa-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ot-black);
+    }
+    .qa-desc {
+      font-size: 11px;
+      color: var(--ot-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Regulations health strip ── */
+    .reg-health-strip {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 18px 20px 22px;
+      margin-bottom: 8px;
+    }
+    .reg-health-strip .section-heading {
+      margin-bottom: 18px;
+    }
+    .reg-bars {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .reg-bar-item {
+      display: grid;
+      gap: 4px;
+    }
+    .reg-bar-name {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ot-muted);
+    }
+    .reg-bar-pct {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.1;
+    }
+    .reg-bar-sub {
+      font-size: 10px;
+      color: var(--ot-muted);
+      margin-bottom: 4px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .lower-split {
+        grid-template-columns: 1fr;
+      }
+      .reg-bars {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .reg-bars {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .quick-actions-grid {
+        grid-template-columns: 1fr;
+      }
+      .attention-title {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a class="brand" href="index.html" aria-label="OneTrust">
+      <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    </a>
+    <nav class="nav-tabs" aria-label="Primary">
+      <a href="index.html" class="active">Home</a>
+      <a href="company.html">Company</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="projects.html">Projects</a>
+      <a href="intelligence.html">Intelligence</a>
+    </nav>
+    <div class="top-actions">
+      <details class="quick-actions">
+        <summary>+ Quick actions</summary>
+        <div class="quick-actions-menu">
+          <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
+          <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
+          <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
+          <a href="#"><span class="qa-glyph">✓</span><span class="qa-text"><span class="qa-label">Review pending exceptions</span><span class="qa-desc">4 awaiting your decision</span></span></a>
+        </div>
+      </details>
+      <div class="sync-badge" aria-live="polite">
+        <span class="sync-dot"></span>
+        <span>Synced 14:02 ET</span>
+      </div>
+      <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+      <button class="icon-button" type="button" aria-label="Notifications" title="Notifications">
+        <span class="notif-dot"></span>
+        &#x1F514;
+      </button>
+      <button class="user-chip" type="button" aria-label="Account menu">
+        <span class="avatar">KJ</span>
+        <span>K. Jones</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- 1. Page header -->
+    <div class="page-header">
+      <div>
+        <p class="eyebrow" style="color: var(--ot-muted);">May 12, 2026 &middot; Monday</p>
+        <h1>Good morning, Kevin.</h1>
+        <p class="hero-copy">You have 3 critical items waiting and 7 risks in flight.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="ai-insights-toggle" type="button" aria-expanded="false" aria-controls="ai-panel-home">
+          <span class="ai-border-glow" aria-hidden="true"></span>
+          <svg class="ai-orb" viewBox="0 0 14 14" aria-hidden="true"><defs><linearGradient id="aiGrad" x1="0" y1="0" x2="14" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#008665"/><stop offset="50%" stop-color="#6CEEAD"/><stop offset="100%" stop-color="#976FE6"/></linearGradient></defs><path d="M7 0.5 L8.3 5.7 L13.5 7 L8.3 8.3 L7 13.5 L5.7 8.3 L0.5 7 L5.7 5.7 Z" fill="url(#aiGrad)"/></svg>
+          <span>AI Insights</span>
+          <span class="ai-toggle-count">3 new</span>
+          <svg class="ai-toggle-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel -->
+    <div class="ai-insights-panel" id="ai-panel-home" data-state="closed">
+        <div class="ai-insights-strip">
+          <article class="ai-insight-card tone-rising">
+            <span class="ai-tag">↑ Rising</span>
+            <strong>Vendor SLA velocity slipping</strong>
+            <p>3 SOC 2 evidence items breached SLA this week — first time in 60 days.</p>
+            <a href="projects.html" class="ai-link">Open queue →</a>
+          </article>
+          <article class="ai-insight-card tone-attention">
+            <span class="ai-tag">⚠ Attention</span>
+            <strong>EU AI Act scope expanded</strong>
+            <p>Customer Lead Capture entered Annex III scope after the profile update 2 days ago.</p>
+            <a href="regulations.html" class="ai-link">Review →</a>
+          </article>
+          <article class="ai-insight-card tone-strong">
+            <span class="ai-tag">✓ Strong</span>
+            <strong>Auto-resolver clearing work</strong>
+            <p>12 PROGRAM mandates cleared today — saved an estimated 4 hours of manual review.</p>
+            <a href="intelligence.html" class="ai-link">View activity →</a>
+          </article>
+        </div>
+        <p class="ai-insights-meta">Refreshed 2 min ago</p>
+    </div>
+
+    <!-- 2. KPI tiles -->
+    <section class="kpi-rail" aria-label="Key metrics" style="margin-bottom: 24px;">
+
+      <button class="kpi-card" type="button" aria-pressed="false"
+        aria-label="Awaiting your triage: 12 items. 3 critical, 2 due today.">
+        <span class="stripe critical"></span>
+        <span class="eyebrow" style="color: var(--ot-muted);">Awaiting Your Triage</span>
+        <strong>12</strong>
+        <span>3 critical &middot; 2 due today</span>
+        <i>Open triage queue &rarr;</i>
+      </button>
+
+      <button class="kpi-card" type="button" aria-pressed="false"
+        aria-label="Risks in flight: 7 items. 2 due this week.">
+        <span class="stripe amber"></span>
+        <span class="eyebrow" style="color: var(--ot-muted);">Risks in Flight</span>
+        <strong>7</strong>
+        <span>2 due this week</span>
+        <i>Filter by open risks &rarr;</i>
+      </button>
+
+      <button class="kpi-card" type="button" aria-pressed="false"
+        aria-label="Policies to review: 4 items. 1 expires in 5 days.">
+        <span class="stripe jade"></span>
+        <span class="eyebrow" style="color: var(--ot-muted);">Policies to Review</span>
+        <strong>4</strong>
+        <span>1 expires in 5 days</span>
+        <i>View policy review queue &rarr;</i>
+      </button>
+
+      <button class="kpi-card" type="button" aria-pressed="false"
+        aria-label="Control confidence: 92 percent. Up 3 points this month.">
+        <span class="stripe mint"></span>
+        <span class="eyebrow" style="color: var(--ot-muted);">Control Confidence</span>
+        <strong>92%</strong>
+        <span>+3 pts this month</span>
+        <i>View confidence trend &rarr;</i>
+      </button>
+
+    </section>
+
+    <!-- 3. What needs your attention -->
+    <section class="priority-queue" aria-labelledby="pq-heading">
+      <div class="section-heading" style="margin-bottom: 12px;">
+        <p class="eyebrow" style="color: var(--ot-muted);">Priority Queue</p>
+        <h2 id="pq-heading">What needs your attention</h2>
+      </div>
+
+      <div class="attention-list" role="list">
+
+        <div class="attention-row" role="listitem">
+          <span class="risk-pill risk-critical">Critical</span>
+          <div class="attention-body">
+            <p class="attention-title">Processing sensitive data without explicit legal basis</p>
+            <p class="attention-meta">
+              <span class="meta-seg">Project Magellan</span>
+              <span class="meta-seg">GDPR Art 9</span>
+              <span class="meta-seg" style="color: var(--risk-critical);">Waiting 2d</span>
+            </p>
+          </div>
+          <button class="review-btn" type="button"
+            aria-label="Review: Processing sensitive data without explicit legal basis">Review</button>
+        </div>
+
+        <div class="attention-row" role="listitem">
+          <span class="risk-pill risk-critical">Critical</span>
+          <div class="attention-body">
+            <p class="attention-title">Non-discrimination policy violation flagged</p>
+            <p class="attention-meta">
+              <span class="meta-seg">AuraJets Profile</span>
+              <span class="meta-seg">CPRA</span>
+              <span class="meta-seg" style="color: var(--risk-critical);">Waiting 1d</span>
+            </p>
+          </div>
+          <button class="review-btn" type="button"
+            aria-label="Review: Non-discrimination policy violation flagged">Review</button>
+        </div>
+
+        <div class="attention-row" role="listitem">
+          <span class="risk-pill risk-high">High</span>
+          <div class="attention-body">
+            <p class="attention-title">Missing DPIA for Customer Lead Capture</p>
+            <p class="attention-meta">
+              <span class="meta-seg">P-073</span>
+              <span class="meta-seg">GDPR Art 35</span>
+              <span class="meta-seg" style="color: var(--risk-high);">Waiting 4d</span>
+            </p>
+          </div>
+          <button class="review-btn" type="button"
+            aria-label="Review: Missing DPIA for Customer Lead Capture">Review</button>
+        </div>
+
+        <div class="attention-row" role="listitem">
+          <span class="risk-pill risk-high">High</span>
+          <div class="attention-body">
+            <p class="attention-title">Vendor SOC 2 evidence outdated</p>
+            <p class="attention-meta">
+              <span class="meta-seg">Vendor Risk Exchange</span>
+              <span class="meta-seg">SOC 2 Type II</span>
+              <span class="meta-seg" style="color: var(--risk-high);">Waiting 5d</span>
+            </p>
+          </div>
+          <button class="review-btn" type="button"
+            aria-label="Review: Vendor SOC 2 evidence outdated">Review</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. Activity timeline (full width) -->
+    <div class="split-panel" style="margin-bottom: 24px;">
+        <div class="section-heading">
+          <p class="eyebrow" style="color: var(--ot-muted);">Activity</p>
+          <h2>Timeline</h2>
+        </div>
+        <ul class="timeline" aria-label="Recent activity">
+
+          <li class="ai-event">
+            <span class="actor actor-ai">AI</span>
+            <p>Scored Procurement Renewal Bot at 0.81 confidence — risk tier elevated to HIGH.</p>
+            <time datetime="2026-05-12T13:57:00">5 min ago</time>
+          </li>
+
+          <li class="auto-event">
+            <span class="actor actor-auto">AUTO</span>
+            <p>Auto-resolved 12 PROGRAM mandates against the Q2 compliance cohort.</p>
+            <time datetime="2026-05-12T13:40:00">22 min ago</time>
+          </li>
+
+          <li class="human-event">
+            <span class="actor actor-human">HUMAN</span>
+            <p>L. Chen approved Vendor Risk Exchange audit packet — marked compliant.</p>
+            <time datetime="2026-05-12T13:02:00">1h ago</time>
+          </li>
+
+          <li class="ai-event">
+            <span class="actor actor-ai">AI</span>
+            <p>Collapsed 3 duplicate findings across Project Magellan and AuraJets Profile into 1 unique item.</p>
+            <time datetime="2026-05-12T12:30:00">1h 32min ago</time>
+          </li>
+
+          <li class="auto-event">
+            <span class="actor actor-auto">AUTO</span>
+            <p>Evidence match for P-073 completed: 4 of 6 artifacts collected. DPIA still missing.</p>
+            <time datetime="2026-05-12T11:15:00">2h 47min ago</time>
+          </li>
+
+          <li class="human-event">
+            <span class="actor actor-human">HUMAN</span>
+            <p>R. Patel submitted ROPA v4 for HR Onboarding Module — now under legal review.</p>
+            <time datetime="2026-05-12T09:48:00">4h 14min ago</time>
+          </li>
+
+        </ul>
+    </div>
+
+    <!-- 5. Regulations health strip -->
+    <section class="reg-health-strip" aria-labelledby="reg-health-heading">
+      <div class="section-heading">
+        <p class="eyebrow" style="color: var(--ot-muted);">Coverage Overview</p>
+        <h2 id="reg-health-heading">Regulations health</h2>
+      </div>
+      <div class="reg-bars">
+
+        <div class="reg-bar-item">
+          <span class="reg-bar-name">GDPR</span>
+          <span class="reg-bar-pct">92%</span>
+          <span class="reg-bar-sub">Coverage &middot; EU</span>
+          <div class="bar" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" aria-label="GDPR coverage 92 percent">
+            <span style="--value: 92%; --fill: var(--ot-jade);"></span>
+          </div>
+        </div>
+
+        <div class="reg-bar-item">
+          <span class="reg-bar-name">CCPA</span>
+          <span class="reg-bar-pct">78%</span>
+          <span class="reg-bar-sub">Coverage &middot; US-CA</span>
+          <div class="bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="CCPA coverage 78 percent">
+            <span style="--value: 78%; --fill: var(--ot-mint);"></span>
+          </div>
+        </div>
+
+        <div class="reg-bar-item">
+          <span class="reg-bar-name">CPRA</span>
+          <span class="reg-bar-pct">89%</span>
+          <span class="reg-bar-sub">Coverage &middot; US-CA</span>
+          <div class="bar" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" aria-label="CPRA coverage 89 percent">
+            <span style="--value: 89%; --fill: var(--ot-jade);"></span>
+          </div>
+        </div>
+
+        <div class="reg-bar-item">
+          <span class="reg-bar-name">VCDPA</span>
+          <span class="reg-bar-pct">71%</span>
+          <span class="reg-bar-sub">Coverage &middot; US-VA</span>
+          <div class="bar" role="progressbar" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100" aria-label="VCDPA coverage 71 percent">
+            <span style="--value: 71%; --fill: var(--risk-high);"></span>
+          </div>
+        </div>
+
+        <div class="reg-bar-item">
+          <span class="reg-bar-name">PCI DSS</span>
+          <span class="reg-bar-pct">95%</span>
+          <span class="reg-bar-sub">Coverage &middot; Global</span>
+          <div class="bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" aria-label="PCI DSS coverage 95 percent">
+            <span style="--value: 95%; --fill: var(--ot-jade);"></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    <span>&copy; 2026 OneTrust</span>
+  </footer>
+
+  <script src="ai-insights.js"></script>
+</body>
+</html>

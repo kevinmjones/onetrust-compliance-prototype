@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects · OneTrust Compliance</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .projects-page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--ot-rule);
+      margin-bottom: 16px;
+    }
+    .projects-page-header h1 {
+      margin: 4px 0 4px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.2;
+    }
+    .projects-page-header p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--ot-muted);
+    }
+    .projects-page-header .eyebrow {
+      color: var(--ot-muted);
+    }
+    .projects-page-header .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .outline-button {
+      border: 1px solid var(--ot-rule);
+      background: var(--ot-white);
+      color: var(--ot-black);
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 14px;
+      cursor: pointer;
+    }
+    .outline-button:hover { border-color: var(--ot-black); }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <a class="brand" href="index.html" aria-label="OneTrust">
+      <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    </a>
+    <nav class="nav-tabs" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="company.html">Company</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="intelligence.html">Intelligence</a>
+    </nav>
+    <div class="top-actions">
+      <details class="quick-actions">
+        <summary>+ Quick actions</summary>
+        <div class="quick-actions-menu">
+          <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
+          <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
+          <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
+          <a href="#"><span class="qa-glyph">✓</span><span class="qa-text"><span class="qa-label">Review pending exceptions</span><span class="qa-desc">4 awaiting your decision</span></span></a>
+        </div>
+      </details>
+      <div class="sync-badge" aria-live="polite">
+        <span class="sync-dot"></span>
+        <span>Synced 14:02 ET</span>
+      </div>
+      <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+      <button class="icon-button" type="button" aria-label="Notifications" title="Notifications">
+        <span class="notif-dot"></span>
+        &#x1F514;
+      </button>
+      <button class="user-chip" type="button" aria-label="Account menu">
+        <span class="avatar">KJ</span>
+        <span>K. Jones</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- Page header -->
+    <div class="projects-page-header">
+      <div>
+        <p class="eyebrow">TECH RISK &amp; COMPLIANCE</p>
+        <h1>Projects</h1>
+        <p>12 projects moving through validation — from intake to audit-ready.</p>
+      </div>
+      <div class="header-actions">
+        <button class="ai-insights-toggle" type="button" aria-expanded="false" aria-controls="ai-panel-projects">
+          <span class="ai-border-glow" aria-hidden="true"></span>
+          <svg class="ai-orb" viewBox="0 0 14 14" aria-hidden="true"><defs><linearGradient id="aiGrad" x1="0" y1="0" x2="14" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#008665"/><stop offset="50%" stop-color="#6CEEAD"/><stop offset="100%" stop-color="#976FE6"/></linearGradient></defs><path d="M7 0.5 L8.3 5.7 L13.5 7 L8.3 8.3 L7 13.5 L5.7 8.3 L0.5 7 L5.7 5.7 Z" fill="url(#aiGrad)"/></svg>
+          <span>AI Insights</span>
+          <span class="ai-toggle-count">3 new</span>
+          <svg class="ai-toggle-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="outline-button" type="button">Export board</button>
+        <button class="primary-button" type="button">+ New project</button>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel -->
+    <div class="ai-insights-panel" id="ai-panel-projects" data-state="closed">
+        <div class="ai-insights-strip">
+          <article class="ai-insight-card tone-strong">
+            <span class="ai-tag">✓ Ready to auto-resolve</span>
+            <strong>8 PROGRAM mandates can clear this cohort</strong>
+            <p>Apply auto-resolve and skip 8 manual reviews — saves an estimated 3 hours.</p>
+            <a href="#" class="ai-link">Apply now →</a>
+          </article>
+          <article class="ai-insight-card tone-attention">
+            <span class="ai-tag">⚠ 5 SLAs at risk</span>
+            <strong>Items aging in Legal review</strong>
+            <p>Past 14 days waiting on counsel — consider escalating in batch.</p>
+            <a href="#" class="ai-link">Escalate batch →</a>
+          </article>
+          <article class="ai-insight-card tone-info">
+            <span class="ai-tag">✦ Dedupe candidates</span>
+            <strong>14 similar findings grouped</strong>
+            <p>AI clustered duplicates across 3 projects into 4 unique items.</p>
+            <a href="#" class="ai-link">Review groups →</a>
+          </article>
+        </div>
+        <p class="ai-insights-meta">Refreshed 2 min ago</p>
+    </div>
+
+    <section class="kpi-rail" aria-label="Executive KPIs">
+      <button class="kpi-card" data-kpi="blocked" type="button" aria-pressed="false">
+        <span class="stripe critical"></span>
+        <span class="eyebrow">BLOCKED PROJECTS</span>
+        <strong>47</strong>
+        <span>+6 vs last week · 12 high-risk</span>
+        <i>Filter board by blockers</i>
+      </button>
+      <button class="kpi-card" data-kpi="due" type="button" aria-pressed="false">
+        <span class="stripe amber"></span>
+        <span class="eyebrow">DUE WITHIN 7 DAYS</span>
+        <strong>132</strong>
+        <span>19 missing evidence</span>
+        <i>Filter board by SLA pressure</i>
+      </button>
+      <button class="kpi-card" data-kpi="automation" type="button" aria-pressed="false">
+        <span class="stripe jade"></span>
+        <span class="eyebrow">AUTO-RESOLVED</span>
+        <strong>38,420 hrs</strong>
+        <span>PROGRAM mandates · YTD</span>
+        <i>Show automation candidates</i>
+      </button>
+      <button class="kpi-card" data-kpi="confidence" type="button" aria-pressed="false">
+        <span class="stripe mint"></span>
+        <span class="eyebrow">CONTROL CONFIDENCE</span>
+        <strong>92%</strong>
+        <span>Median AI score across portfolio</span>
+        <i>Find low-confidence work</i>
+      </button>
+    </section>
+
+    <section class="filter-bar" aria-label="Board filters">
+      <label class="visually-hidden" for="boardSearch">Search projects, obligations, owners</label>
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="boardSearch" type="search" placeholder="Search projects, obligations, owners…">
+      </div>
+      <div class="chips" id="filterChips" aria-label="Filters"></div>
+      <label class="select-label">
+        <span class="visually-hidden">Sort projects</span>
+        <select id="sortSelect">
+          <option value="sla">SLA ascending</option>
+          <option value="risk">Risk descending</option>
+          <option value="confidence">AI confidence ascending</option>
+          <option value="updated">Recently updated</option>
+        </select>
+      </label>
+      <div class="density-toggle" role="group" aria-label="Density">
+        <button type="button" data-density="comfortable">Comfortable</button>
+        <button type="button" data-density="compact">Compact</button>
+      </div>
+      <output id="resultCount">Showing 0 of 0 projects</output>
+    </section>
+
+    <section class="workspace" aria-label="Projects workspace">
+      <div class="board-shell">
+        <div id="board" class="board" aria-live="polite"></div>
+      </div>
+      <aside id="inspector" class="inspector" aria-label="Project pipeline"></aside>
+    </section>
+
+    <section class="automation-strip">
+      <div class="section-heading inverted">
+        <p class="eyebrow">AUTOMATION RECOMMENDATIONS</p>
+      </div>
+      <div class="recommendations" id="recommendations"></div>
+    </section>
+
+    <section class="audit-grid" aria-label="Evidence and audit trail">
+      <div class="matrix-panel">
+        <div class="section-heading">
+          <p class="eyebrow">PORTFOLIO CONFORMITY</p>
+          <h2>Evidence &amp; audit trail</h2>
+        </div>
+        <div class="matrix-wrap">
+          <div class="y-label">← 565 OBLIGATIONS</div>
+          <div>
+            <div id="matrix" class="micro-matrix" role="grid" aria-label="Portfolio conformity heatmap"></div>
+            <div class="x-label">200 PROJECTS →</div>
+          </div>
+        </div>
+        <p id="matrixTooltip" class="matrix-tooltip" aria-live="polite">Hover a cell to inspect conformity evidence.</p>
+      </div>
+      <div class="timeline-panel">
+        <div class="section-heading">
+          <p class="eyebrow">AUDIT EVENTS</p>
+          <h2>Recent decisions</h2>
+        </div>
+        <ol id="timeline" class="timeline"></ol>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    <span>© 2026 OneTrust</span>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="ai-insights.js"></script>
+</body>
+</html>
