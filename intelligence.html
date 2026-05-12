@@ -6,7 +6,7 @@
   <title>Intelligence · OneTrust Compliance</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* ── Page-level layout ───────────────────────────────────────────── */
+    /* ── Page-level layout ──────────────────────────────────────────── */
     .intel-page-header {
       display: flex;
       justify-content: space-between;
@@ -55,7 +55,7 @@
       color: var(--ot-mint);
     }
 
-    /* ── KPI row (5 compact cards) ───────────────────────────────────── */
+    /* ── KPI row (5 compact cards) ───────────────────────────────────────── */
     .kpi-rail-5 {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -95,7 +95,7 @@
     .kpi-sm .trend-down { color: var(--risk-critical); }
     .kpi-sm .trend-neutral { color: var(--ot-muted); }
 
-    /* ── Section card ─────────────────────────────────────────────────── */
+    /* ── Section card ───────────────────────────────────────────────────── */
     .intel-card {
       border: 1px solid var(--ot-rule);
       border-radius: var(--radius-card);
@@ -124,7 +124,7 @@
       line-height: 1.5;
     }
 
-    /* ── Risk DNA stacked bars ────────────────────────────────────────── */
+    /* ── Risk DNA stacked bars ──────────────────────────────────────────── */
     .dna-table {
       display: grid;
       gap: 12px;
@@ -200,7 +200,7 @@
       flex-shrink: 0;
     }
 
-    /* ── Accept / Escalate two-column ─────────────────────────────────── */
+    /* ── Accept / Escalate two-column ───────────────────────────────────────────── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -259,7 +259,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* ── AI Insight cards ─────────────────────────────────────────────── */
+    /* ── AI Insight cards ───────────────────────────────────────────────────── */
     .insight-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -299,7 +299,7 @@
       line-height: 1.5;
     }
 
-    /* ── Decision feed ────────────────────────────────────────────────── */
+    /* ── Decision feed ─────────────────────────────────────────────────────── */
     .decision-feed {
       list-style: none;
       margin: 16px 0 0;
@@ -372,7 +372,7 @@
       font-size: 9px;
     }
 
-    /* ── Feed section card ────────────────────────────────────────────── */
+    /* ── Feed section card ───────────────────────────────────────────────────── */
     .feed-header {
       display: flex;
       align-items: baseline;
@@ -418,6 +418,7 @@
       <a href="index.html">Home</a>
       <a href="company.html">Company</a>
       <a href="regulations.html">Regulations</a>
+      <a href="policies.html">Policies</a>
       <a href="projects.html">Projects</a>
       <a href="intelligence.html" class="active">Intelligence</a>
     </nav>
@@ -425,6 +426,7 @@
       <details class="quick-actions">
         <summary>+ Quick actions</summary>
         <div class="quick-actions-menu">
+          <a href="policies.html"><span class="qa-glyph">📜</span><span class="qa-text"><span class="qa-label">Draft policy</span><span class="qa-desc">Start from a regulation article or blank canvas</span></span></a>
           <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
           <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
           <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
@@ -449,7 +451,7 @@
 
   <main class="page">
 
-    <!-- ── 1. Page header ─────────────────────────────────────────────── -->
+    <!-- ── 1. Page header ────────────────────────────────────────────────────── -->
     <div class="intel-page-header">
       <div class="header-copy">
         <span class="eyebrow mint-text">RISK INTELLIGENCE · YOUR ORG'S COMPLIANCE DNA</span>
@@ -494,7 +496,7 @@
         <p class="ai-insights-meta">Refreshed 12 min ago</p>
     </div>
 
-    <!-- ── 2. KPI stat row (5 cards) ─────────────────────────────────── -->
+    <!-- ── 2. KPI stat row (5 cards) ───────────────────────────────────────────── -->
     <div class="kpi-rail-5" role="list" aria-label="Key metrics">
 
       <div class="kpi-sm" role="listitem">
@@ -529,7 +531,7 @@
 
     </div>
 
-    <!-- ── 3. Risk DNA stacked bar chart ──────────────────────────────── -->
+    <!-- ── 3. Risk DNA stacked bar chart ────────────────────────────────────────── -->
     <div class="intel-card">
       <div class="intel-card-header">
         <div>
@@ -541,14 +543,12 @@
 
       <div class="dna-table" role="table" aria-label="Risk DNA by regulation">
 
-        <!-- Header row -->
         <div class="dna-row" role="row" aria-hidden="true" style="margin-bottom:2px;">
           <div class="dna-label" style="font-size:9px;color:var(--ot-muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;" role="columnheader">Regulation</div>
           <div style="font-size:9px;color:var(--ot-muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;" role="columnheader">Composition</div>
           <div style="font-size:9px;color:var(--ot-muted);font-weight:700;letter-spacing:1px;text-transform:uppercase;" role="columnheader">Stance</div>
         </div>
 
-        <!-- GDPR: 41% mitigated · 26% promoted · 33% exception -->
         <div class="dna-row" role="row">
           <div class="dna-label" role="cell">GDPR</div>
           <div role="cell" aria-label="41% mitigated, 26% promoted, 33% exception">
@@ -564,7 +564,6 @@
           </div>
         </div>
 
-        <!-- CCPA: 18% mitigated · 12% promoted · 70% exception -->
         <div class="dna-row" role="row">
           <div class="dna-label" role="cell">CCPA</div>
           <div role="cell" aria-label="18% mitigated, 12% promoted, 70% exception">
@@ -580,7 +579,6 @@
           </div>
         </div>
 
-        <!-- CPRA: 30% mitigated · 31% promoted · 39% exception -->
         <div class="dna-row" role="row">
           <div class="dna-label" role="cell">CPRA</div>
           <div role="cell" aria-label="30% mitigated, 31% promoted, 39% exception">
@@ -596,7 +594,6 @@
           </div>
         </div>
 
-        <!-- VCDPA: 55% mitigated · 22% promoted · 23% exception -->
         <div class="dna-row" role="row">
           <div class="dna-label" role="cell">VCDPA</div>
           <div role="cell" aria-label="55% mitigated, 22% promoted, 23% exception">
@@ -612,7 +609,6 @@
           </div>
         </div>
 
-        <!-- PCI DSS: 82% mitigated · 8% promoted · 10% exception -->
         <div class="dna-row" role="row">
           <div class="dna-label" role="cell">PCI DSS</div>
           <div role="cell" aria-label="82% mitigated, 8% promoted, 10% exception">
@@ -628,7 +624,7 @@
           </div>
         </div>
 
-      </div><!-- /dna-table -->
+      </div>
 
       <div class="dna-legend" aria-label="Chart legend">
         <div class="legend-item">
@@ -644,62 +640,60 @@
           Accepted as exception
         </div>
       </div>
-    </div><!-- /intel-card Risk DNA -->
+    </div>
 
-    <!-- ── 4. Accept / Escalate two-column ───────────────────────────── -->
+    <!-- ── 4. Accept / Escalate two-column ─────────────────────────────────────────── -->
     <div class="two-col">
 
-      <!-- Left: amber — What you typically accept -->
       <div class="tinted-card amber-tint">
         <span class="eyebrow">WHAT YOU TYPICALLY ACCEPT</span>
         <h3>Patterns in your exceptions</h3>
         <ul class="pattern-list">
           <li>
-            <div class="pattern-quote">"Vague language in security controls ('adequate', 'reasonable')"</div>
+            <div class="pattern-quote">“Vague language in security controls ('adequate', 'reasonable')”</div>
             <div class="pattern-meta">8 decisions · GDPR + CCPA · Documentation</div>
           </li>
           <li>
-            <div class="pattern-quote">"Missing specific consumer rights mechanisms for sensitive data"</div>
+            <div class="pattern-quote">“Missing specific consumer rights mechanisms for sensitive data”</div>
             <div class="pattern-meta">6 decisions · CCPA · Data Subject Rights</div>
           </li>
           <li>
-            <div class="pattern-quote">"Incomplete documentation of testing cadence for security measures"</div>
+            <div class="pattern-quote">“Incomplete documentation of testing cadence for security measures”</div>
             <div class="pattern-meta">5 decisions · GDPR · Security</div>
           </li>
           <li>
-            <div class="pattern-quote">"Vendor SOC 2 reports older than 12 months"</div>
+            <div class="pattern-quote">“Vendor SOC 2 reports older than 12 months”</div>
             <div class="pattern-meta">4 decisions · Third-party · Vendor Risk</div>
           </li>
         </ul>
       </div>
 
-      <!-- Right: mint — What you typically escalate -->
       <div class="tinted-card mint-tint">
         <span class="eyebrow">WHAT YOU TYPICALLY ESCALATE</span>
         <h3>Patterns in your promoted risks</h3>
         <ul class="pattern-list">
           <li>
-            <div class="pattern-quote">"Processing sensitive data without explicit legal basis"</div>
+            <div class="pattern-quote">“Processing sensitive data without explicit legal basis”</div>
             <div class="pattern-meta">4 decisions · GDPR Art 9 · Legal Basis</div>
           </li>
           <li>
-            <div class="pattern-quote">"Non-discrimination policy violations"</div>
+            <div class="pattern-quote">“Non-discrimination policy violations”</div>
             <div class="pattern-meta">3 decisions · CPRA + CCPA · Consumer Rights</div>
           </li>
           <li>
-            <div class="pattern-quote">"Cross-border transfer without SCC/IDTA"</div>
+            <div class="pattern-quote">“Cross-border transfer without SCC/IDTA”</div>
             <div class="pattern-meta">3 decisions · GDPR Art 46 · Transfers</div>
           </li>
           <li>
-            <div class="pattern-quote">"Automated decision-making without human oversight"</div>
+            <div class="pattern-quote">“Automated decision-making without human oversight”</div>
             <div class="pattern-meta">2 decisions · GDPR Art 22 + EU AI Act · AI Governance</div>
           </li>
         </ul>
       </div>
 
-    </div><!-- /two-col -->
+    </div>
 
-    <!-- ── 5. Decision feed ───────────────────────────────────────────── -->
+    <!-- ── 5. Decision feed ─────────────────────────────────────────────────────────── -->
     <div class="intel-card">
       <div class="feed-header">
         <div>
@@ -808,7 +802,7 @@
         </li>
 
       </ul>
-    </div><!-- /decision feed -->
+    </div>
 
   </main>
 
