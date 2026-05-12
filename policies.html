@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policies · OneTrust Compliance</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .page-header-left { flex: 1; }
+    .page-header-left .eyebrow {
+      color: var(--ot-jade);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .page-header-left h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.2;
+    }
+    .page-header-left p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--ot-muted);
+    }
+    .page-header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+      padding-top: 6px;
+    }
+    .outlined-button {
+      border: 1.5px solid var(--ot-black);
+      border-radius: var(--radius-pill);
+      background: var(--ot-white);
+      color: var(--ot-black);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px 18px;
+    }
+
+    /* ── Filter bar ── */
+    .reg-filter-bar {
+      border-top: 1px solid var(--ot-rule);
+      border-bottom: 1px solid var(--ot-rule);
+      padding: 10px 0;
+      margin-bottom: 22px;
+    }
+
+    /* ── Policy cards grid ── */
+    .pol-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .pol-card {
+      border: 1px solid var(--ot-rule);
+      border-radius: var(--radius-card);
+      background: var(--ot-white);
+      padding: 18px 20px 14px;
+      box-shadow: 0 1px 0 var(--ot-rule);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pol-card.card-expiring {
+      border-color: #F39C1260;
+    }
+
+    .pol-card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pol-id {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--ot-muted);
+      font-family: 'Courier New', monospace;
+    }
+
+    .pol-status {
+      border-radius: var(--radius-pill);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+    }
+    .status-approved {
+      background: var(--ot-jade);
+      color: var(--ot-white);
+    }
+    .status-draft {
+      background: #EFEFEF;
+      color: var(--ot-body);
+    }
+    .status-in-review {
+      background: #EDE9FC;
+      color: var(--ot-purple);
+    }
+    .status-expiring {
+      background: #FEF3E2;
+      color: #92650A;
+    }
+
+    .pol-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ot-black);
+      line-height: 1.3;
+    }
+
+    .pol-meta {
+      margin: 0;
+      font-size: 11px;
+      color: var(--ot-muted);
+    }
+
+    .pol-mitigates {
+      background: var(--surface-tint-pol);
+      border-left: 3px solid var(--ot-mint);
+      border-radius: 0 8px 8px 0;
+      padding: 8px 12px;
+    }
+    .pol-mitigates .eyebrow {
+      color: var(--ot-jade);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .pol-mitigates p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--ot-body);
+      line-height: 1.4;
+    }
+
+    .pol-mitigates.mitigates-pending {
+      background: #FAF5FF;
+      border-left-color: var(--ot-purple);
+    }
+    .pol-mitigates.mitigates-pending .eyebrow { color: var(--ot-purple); }
+
+    .pol-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--ot-rule);
+      padding-top: 10px;
+      flex-wrap: wrap;
+    }
+    .pol-owner {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ot-body);
+      flex: 1;
+      min-width: 0;
+    }
+    .pol-review {
+      font-size: 11px;
+      color: var(--ot-muted);
+      white-space: nowrap;
+    }
+    .pol-view {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ot-jade);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-left: auto;
+    }
+    .pol-view:hover { text-decoration: underline; }
+
+    .pol-review.review-expiring {
+      color: #92650A;
+      font-weight: 700;
+    }
+
+    /* ── AI-authored callout ── */
+    .ai-authored-callout {
+      background: var(--surface-bottom-mint);
+      border: 2px solid var(--ot-mint);
+      border-radius: var(--radius-card);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+    .ai-authored-callout .eyebrow {
+      color: var(--ot-jade);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .ai-authored-callout h2 {
+      margin: 0 0 4px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ot-black);
+    }
+    .ai-authored-callout p {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: var(--ot-muted);
+      line-height: 1.5;
+    }
+    .article-mappings {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .article-mapping {
+      border: 1px solid var(--ot-mint);
+      border-radius: var(--radius-pill);
+      background: var(--ot-white);
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ot-jade);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1100px) {
+      .pol-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <a class="brand" href="index.html" aria-label="OneTrust">
+      <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    </a>
+    <nav class="nav-tabs" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="company.html">Company</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="policies.html" class="active">Policies</a>
+      <a href="projects.html">Projects</a>
+      <a href="intelligence.html">Intelligence</a>
+    </nav>
+    <div class="top-actions">
+      <details class="quick-actions">
+        <summary>+ Quick actions</summary>
+        <div class="quick-actions-menu">
+          <a href="#"><span class="qa-glyph">📜</span><span class="qa-text"><span class="qa-label">Draft policy</span><span class="qa-desc">Start from a regulation article or blank canvas</span></span></a>
+          <a href="#"><span class="qa-glyph">+</span><span class="qa-text"><span class="qa-label">New business process</span><span class="qa-desc">Register a process for compliance mapping</span></span></a>
+          <a href="#"><span class="qa-glyph">⊕</span><span class="qa-text"><span class="qa-label">Run validation</span><span class="qa-desc">Trigger a fresh AI scan</span></span></a>
+          <a href="#"><span class="qa-glyph">◷</span><span class="qa-text"><span class="qa-label">Generate audit memo</span><span class="qa-desc">Compile locked packets into a Q2 memo</span></span></a>
+          <a href="#"><span class="qa-glyph">✓</span><span class="qa-text"><span class="qa-label">Review pending exceptions</span><span class="qa-desc">4 awaiting your decision</span></span></a>
+        </div>
+      </details>
+      <div class="sync-badge" aria-live="polite">
+        <span class="sync-dot"></span>
+        <span>Synced 14:02 ET</span>
+      </div>
+      <button class="icon-button" type="button" aria-label="Help" title="Help">?</button>
+      <button class="icon-button" type="button" aria-label="Notifications" title="Notifications">
+        <span class="notif-dot"></span>
+        &#x1F514;
+      </button>
+      <button class="user-chip" type="button" aria-label="Account menu">
+        <span class="avatar">KJ</span>
+        <span>K. Jones</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- 1. Page header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="eyebrow">Policy Library</span>
+        <h1>47 active policies covering your control framework</h1>
+        <p>Drafted by AI, approved by humans. Each policy maps to one or more controls and auto-mitigates qualifying findings.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="ai-insights-toggle" type="button" aria-expanded="false" aria-controls="ai-panel-policies">
+          <span class="ai-border-glow" aria-hidden="true"></span>
+          <svg class="ai-orb" viewBox="0 0 14 14" aria-hidden="true"><defs><linearGradient id="aiGrad" x1="0" y1="0" x2="14" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#008665"/><stop offset="50%" stop-color="#6CEEAD"/><stop offset="100%" stop-color="#976FE6"/></linearGradient></defs><path d="M7 0.5 L8.3 5.7 L13.5 7 L8.3 8.3 L7 13.5 L5.7 8.3 L0.5 7 L5.7 5.7 Z" fill="url(#aiGrad)"/></svg>
+          <span>AI Insights</span>
+          <span class="ai-toggle-count">3 new</span>
+          <svg class="ai-toggle-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="outlined-button" type="button">Import policy</button>
+        <button class="primary-button" type="button">+ Draft policy</button>
+      </div>
+    </div>
+
+    <!-- AI Insights Panel -->
+    <div class="ai-insights-panel" id="ai-panel-policies" data-state="closed">
+      <div class="ai-insights-strip">
+        <article class="ai-insight-card tone-attention">
+          <span class="ai-tag">⚠ Coverage gap</span>
+          <strong>POL-PRV-012 expires in 49 days</strong>
+          <p>Data Subject Rights Procedure (CCPA) — renewal not scheduled. Blocks your Q3 audit packet if not refreshed by Jun 30.</p>
+          <a href="#" class="ai-link">Schedule review →</a>
+        </article>
+        <article class="ai-insight-card tone-info">
+          <span class="ai-tag">✦ AI draft ready</span>
+          <strong>GDPR Art 9 sensitive-data policy drafted</strong>
+          <p>Drafted from your last 3 approved sensitive-data policies. M. Patel pending counsel review.</p>
+          <a href="#" class="ai-link">Review draft →</a>
+        </article>
+        <article class="ai-insight-card tone-strong">
+          <span class="ai-tag">✓ Coverage strong</span>
+          <strong>92% of incoming findings auto-mitigated</strong>
+          <p>When your policies match a finding, AI auto-resolves it without opening a card. Saved ~38 hours this month.</p>
+          <a href="#" class="ai-link">View matches →</a>
+        </article>
+      </div>
+      <p class="ai-insights-meta">Refreshed 5 min ago</p>
+    </div>
+
+    <!-- 2. Filter chip row -->
+    <div class="reg-filter-bar">
+      <div class="chips">
+        <button class="chip active" type="button">All policies · 47</button>
+        <button class="chip" type="button">Approved · 38</button>
+        <button class="chip" type="button">Draft · 5</button>
+        <button class="chip" type="button">In review · 4</button>
+        <button class="chip" type="button">Expiring soon · 4</button>
+        <button class="chip" type="button">Privacy · 18</button>
+        <button class="chip" type="button">Security · 12</button>
+        <button class="chip" type="button">AI Governance · 6</button>
+      </div>
+    </div>
+
+    <!-- 3. Policy cards grid -->
+    <div class="pol-grid">
+
+      <!-- Card 1: POL-PRV-018 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-PRV-018</span>
+          <span class="pol-status status-approved">Approved</span>
+        </div>
+        <h3 class="pol-title">Records of Processing Activities (ROPA)</h3>
+        <p class="pol-meta">GDPR Art 30 · 12 controls · v4.2</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>23 GDPR Art 30 findings · 4 GDPR Art 5 findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">KJ</span>
+          <span class="pol-owner">K. Jones · Privacy Lead</span>
+          <span class="pol-review">Reviewed 2w ago · Next Jul 2026</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 2: POL-SEC-007 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-SEC-007</span>
+          <span class="pol-status status-approved">Approved</span>
+        </div>
+        <h3 class="pol-title">Encryption at Rest and in Transit</h3>
+        <p class="pol-meta">GDPR Art 32 + PCI DSS Req 3 · 18 controls · v6.1</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>14 encryption findings · 6 PCI DSS findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">LC</span>
+          <span class="pol-owner">L. Chen · Security GRC</span>
+          <span class="pol-review">Reviewed 1m ago · Next Aug 2026</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 3: POL-PRV-024 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-PRV-024</span>
+          <span class="pol-status status-draft">Draft</span>
+        </div>
+        <h3 class="pol-title">Sensitive Data Processing Legal Basis</h3>
+        <p class="pol-meta">GDPR Art 9 · 8 controls · v0.3</p>
+        <div class="pol-mitigates mitigates-pending">
+          <span class="eyebrow">Will Auto-Mitigate</span>
+          <p>~12 sensitive-data findings once approved</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">MP</span>
+          <span class="pol-owner">M. Patel · Product Counsel</span>
+          <span class="pol-review">AI-drafted 1d ago · Pending counsel review</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 4: POL-PRV-012 -->
+      <div class="pol-card card-expiring">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-PRV-012</span>
+          <span class="pol-status status-expiring">Expiring</span>
+        </div>
+        <h3 class="pol-title">Data Subject Rights Procedure (CCPA)</h3>
+        <p class="pol-meta">CCPA + CPRA · 14 controls · v3.0</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>31 consumer rights findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">KJ</span>
+          <span class="pol-owner">K. Jones · Privacy Lead</span>
+          <span class="pol-review review-expiring">Expires Jun 30 · 49 days remaining</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 5: POL-SEC-011 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-SEC-011</span>
+          <span class="pol-status status-approved">Approved</span>
+        </div>
+        <h3 class="pol-title">Third-Party Risk Assessment</h3>
+        <p class="pol-meta">SOC 2 CC9.2 · 9 controls · v2.4</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>9 vendor findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">LC</span>
+          <span class="pol-owner">L. Chen · Security GRC</span>
+          <span class="pol-review">Reviewed 3w ago · Next Aug 2026</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 6: POL-AI-003 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-AI-003</span>
+          <span class="pol-status status-in-review">In Review</span>
+        </div>
+        <h3 class="pol-title">AI System Lifecycle Governance</h3>
+        <p class="pol-meta">EU AI Act · 22 controls · v1.0</p>
+        <div class="pol-mitigates mitigates-pending">
+          <span class="eyebrow">Will Auto-Mitigate</span>
+          <p>~18 high-risk AI findings once approved</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">NB</span>
+          <span class="pol-owner">N. Brooks · AI Governance</span>
+          <span class="pol-review">4 of 7 reviewers approved · In legal review</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 7: POL-PRV-031 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-PRV-031</span>
+          <span class="pol-status status-approved">Approved</span>
+        </div>
+        <h3 class="pol-title">International Data Transfer (SCCs/IDTA)</h3>
+        <p class="pol-meta">GDPR Art 46 · 6 controls · v2.0</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>8 cross-border findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">MP</span>
+          <span class="pol-owner">M. Patel · Product Counsel</span>
+          <span class="pol-review">Reviewed 2m ago · Next Jul 2026</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+      <!-- Card 8: POL-OPS-002 -->
+      <div class="pol-card">
+        <div class="pol-card-top">
+          <span class="pol-id">POL-OPS-002</span>
+          <span class="pol-status status-approved">Approved</span>
+        </div>
+        <h3 class="pol-title">Incident Response and Breach Notification</h3>
+        <p class="pol-meta">GDPR Art 33+34 + CCPA · 16 controls · v5.3</p>
+        <div class="pol-mitigates">
+          <span class="eyebrow">Auto-Mitigates</span>
+          <p>11 incident-response findings</p>
+        </div>
+        <div class="pol-footer">
+          <span class="avatar">DS</span>
+          <span class="pol-owner">D. Smith · Control Owner</span>
+          <span class="pol-review">Reviewed 1w ago · Next Aug 2026</span>
+          <a href="#" class="pol-view">View →</a>
+        </div>
+      </div>
+
+    </div><!-- /pol-grid -->
+
+    <!-- 4. AI-authored from articles callout -->
+    <div class="ai-authored-callout">
+      <span class="eyebrow">AI-Authored from Articles</span>
+      <h2>8 article-derived policies in your library</h2>
+      <p>Click any regulation article in Regulations and AI drafts a starter policy from it — pre-filled with your company context.</p>
+      <div class="article-mappings">
+        <span class="article-mapping">GDPR Art 30 → POL-PRV-018</span>
+        <span class="article-mapping">GDPR Art 32 → POL-SEC-007</span>
+        <span class="article-mapping">CCPA §1798.105 → POL-PRV-012</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <img src="assets/onetrust-logo.svg" alt="OneTrust">
+    <span>© 2026 OneTrust</span>
+  </footer>
+
+  <script src="ai-insights.js"></script>
+</body>
+</html>
