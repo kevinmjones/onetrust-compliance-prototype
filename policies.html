@@ -76,8 +76,14 @@
       gap: 10px;
     }
 
+    /* Expiring card border accent */
     .pol-card.card-expiring {
       border-color: #F39C1260;
+    }
+
+    /* Draft card border accent */
+    .pol-card.card-draft {
+      border-color: var(--ot-rule);
     }
 
     .pol-card-top {
@@ -94,6 +100,7 @@
       font-family: 'Courier New', monospace;
     }
 
+    /* Status pills */
     .pol-status {
       border-radius: var(--radius-pill);
       font-size: 9px;
@@ -133,6 +140,7 @@
       color: var(--ot-muted);
     }
 
+    /* Mitigation callout */
     .pol-mitigates {
       background: var(--surface-tint-pol);
       border-left: 3px solid var(--ot-mint);
@@ -151,12 +159,14 @@
       line-height: 1.4;
     }
 
+    /* Draft / pending mitigation — subtle */
     .pol-mitigates.mitigates-pending {
       background: #FAF5FF;
       border-left-color: var(--ot-purple);
     }
     .pol-mitigates.mitigates-pending .eyebrow { color: var(--ot-purple); }
 
+    /* Card footer */
     .pol-footer {
       display: flex;
       align-items: center;
@@ -187,6 +197,7 @@
     }
     .pol-view:hover { text-decoration: underline; }
 
+    /* Expiring urgency on review text */
     .pol-review.review-expiring {
       color: #92650A;
       font-weight: 700;
@@ -383,7 +394,7 @@
       </div>
 
       <!-- Card 3: POL-PRV-024 -->
-      <div class="pol-card">
+      <div class="pol-card card-draft">
         <div class="pol-card-top">
           <span class="pol-id">POL-PRV-024</span>
           <span class="pol-status status-draft">Draft</span>
